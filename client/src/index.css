@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #333 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 13px;
+  height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #17194a;
+  border-radius: 9px;
+  border: 3px solid #ffffff;
+}
+
+.navTitle {
+  background: -webkit-linear-gradient(to right, #de0d6f 26%, #c34f85 72%);
+  background: -moz-linear-gradient(to right, #de0d6f 26%, #c34f85 72%);
+  background: linear-gradient(to right, #de0d6f 26%, #c34f85 72%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.rotate {
+  transform: rotate(180deg);
+  animation: rotate 1s ease-in-out 0s infinite;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
