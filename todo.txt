@@ -1,5 +1,1 @@
-
-3-complete home [todays sessions , name psy]
-4-add session screen with its see more
-5-record voice and take notes
-6-nav bug
+ record live,  make pending uploads 

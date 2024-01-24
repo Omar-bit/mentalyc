@@ -3,7 +3,8 @@ const router = express.Router();
 const auth = require('../middlewares/auth');
 const { db } = require('../connectionDB.js');
 const multer = require('multer');
-
+const fs = require('fs');
+const path = require('path');
 router.use(auth);
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -54,18 +55,37 @@ router.get('/getOne', (req, res) => {
 
 router.delete('/delete', (req, res) => {
   const { idPat, date } = req.body;
-  db.run(
-    `DELETE FROM session WHERE idPat = ? and idPsy = ? and date = ? `,
+  db.all(
+    'select * from session where idPat = ? and idPsy = ? and date = ?',
     [parseInt(idPat), parseInt(req.idPsy), date],
-    (err) => {
+    (err, rows) => {
       if (err) {
-        res.status(400).json({ error: true, data: err.message });
-        return;
+        return res.status(400).json({ error: true, data: err.message });
       }
-      res.json({
-        error: false,
-        data: 'Session deleted successfully',
-      });
+      db.run(
+        `DELETE FROM session WHERE idPat = ? and idPsy = ? and date = ? `,
+        [parseInt(idPat), parseInt(req.idPsy), date],
+        (err) => {
+          if (err) {
+            res.status(400).json({ error: true, data: err.message });
+            return;
+          }
+        }
+      );
+      try {
+        fs.unlinkSync(path.join('uploads', rows[0].records));
+        console.log('File deleted!');
+        return res.json({
+          error: false,
+          data: 'Session deleted successfully',
+        });
+      } catch (err) {
+        console.error(err.message);
+        return res.json({
+          error: true,
+          data: 'Unkown error',
+        });
+      }
     }
   );
 });

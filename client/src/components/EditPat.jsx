@@ -7,6 +7,9 @@ function EditPat({ closePopup, getPatients, toast, pat }) {
   const [birthdate, setBirthdate] = React.useState(pat?.birthdate || '');
   async function editPat(e) {
     e.preventDefault();
+    if (!name || phone.length < 8 || !birthdate) {
+      toast.error('Please fill all the fields');
+    }
     try {
       const { data } = await axios.put(
         import.meta.env.VITE_BACKEND + '/api/patient/update/' + pat.idPat,
@@ -69,7 +72,18 @@ function EditPat({ closePopup, getPatients, toast, pat }) {
           className='p-1  border-b border-secondary outline-none'
           placeholder='phone'
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={(e) => {
+            if (e.target.value.length === 0) {
+              setPhone('');
+              return;
+            }
+            if (
+              ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(
+                e.target.value[e.target.value.length - 1]
+              )
+            )
+              setPhone(e.target.value);
+          }}
           required
         />
 

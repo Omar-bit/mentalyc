@@ -2,8 +2,17 @@ import React from 'react';
 import { FaFileAlt } from 'react-icons/fa';
 
 function Recording({ recording, setRecording }) {
+  function handleDrop(e) {
+    e.preventDefault();
+    setRecording(e.dataTransfer.files[0]);
+  }
   return (
-    <div className='rounded-md  border-2 border-dashed bg-[#eeeeee2f]  w-full md:w-[48%] p-10 md:p-0  '>
+    <div
+      className='rounded-md  border-2 border-dashed bg-[#eeeeee2f]  w-full md:w-[48%] p-10 md:p-0  '
+      onDrop={(e) => handleDrop(e)}
+      onDrag={(e) => e.preventDefault()}
+      onDragOver={(e) => e.preventDefault()}
+    >
       <label
         htmlFor='audio'
         className=' w-full h-full flex flex-col items-center justify-center cursor-pointer '
