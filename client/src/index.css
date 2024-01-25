@@ -48,3 +48,17 @@
     transform: rotate(360deg);
   }
 }
+.pinging {
+  animation: pinging 2s infinite 0.3s ease-in-out;
+}
+@keyframes pinging {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}

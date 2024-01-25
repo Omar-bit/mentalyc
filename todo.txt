@@ -1,1 +1,1 @@
- record live,  make pending uploads 
+ record live  , documentation , deployment

@@ -10,12 +10,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import Notes from '../components/Notes';
 import Recording from '../components/Recording';
 import Loading from '../components/Loading';
+import LiveRecording from '../components/LiveRecording';
 const date = new Date();
 let month = date.getMonth() + 1;
 let day = date.getDate();
 month = month < 10 ? `0${month}` : month;
 day = day < 10 ? `0${day}` : day;
 const today = `${date.getFullYear()}-${month}-${day}`;
+let id = 0;
 function Record() {
   const [loading, setLoading] = React.useState(false);
   const [notes, setNotes] = React.useState('');
@@ -24,6 +26,8 @@ function Record() {
   const [patients, setPatients] = React.useState([]);
   const [date, setDate] = React.useState(today);
   const [addPatient, setAddPatient] = React.useState(false);
+  const [pending, setPending] = React.useState([]);
+  const [isLive, setIsLive] = React.useState(false);
   async function getPatients() {
     try {
       const { data } = await axios.get(
@@ -37,22 +41,33 @@ function Record() {
       console.log(err);
     }
   }
-  async function upload(e) {
+  function prepareToUpload(e) {
     e.preventDefault();
     if (!patient || !date || !recording) {
       toast.error('Please fill all fields');
       return;
     }
     const formData = new FormData();
+    formData.append('id', id++);
+    formData.append('isLive', isLive);
     formData.append('date', date);
     formData.append('notes', notes);
     formData.append('idPat', patient.value);
     formData.append('records', recording);
-    setLoading(true);
+    setPending((prev) => [...prev, formData]);
+    setNotes('');
+    setRecording(null);
+    setPatient('');
+    setDate(today);
+    setLoading(false);
+  }
+  async function upload(record) {
+    //setLoading(true);
+
     try {
       const { data } = await axios.post(
         import.meta.env.VITE_BACKEND + '/api/session/add',
-        formData,
+        record,
         {
           headers: {
             token: localStorage.getItem('token'),
@@ -67,16 +82,18 @@ function Record() {
     } catch (err) {
       console.log(err);
     } finally {
-      setNotes('');
-      setRecording(null);
-      setPatient('');
-      setDate(today);
-      setLoading(false);
+      //setLoading(false);
     }
   }
   React.useEffect(() => {
     getPatients();
   }, []);
+  React.useEffect(() => {
+    if (pending.length > 0) {
+      upload(pending[0]);
+      setPending((prev) => prev.slice(1));
+    }
+  }, [pending]);
   return (
     <Layout nav='full'>
       <div className=' bg-primary relative md:w-[90%]  w-[95%] py-5 '>
@@ -110,19 +127,54 @@ function Record() {
               />
             </div>
           </div>
-
+          <div className='flex gap-3 items-center w-[47%] ml-auto'>
+            <span
+              className={`${
+                isLive ? 'text-main' : 'text-aux'
+              } cursor-pointer  text-lg`}
+              onClick={() => setIsLive(true)}
+            >
+              Live Record
+            </span>
+            <span
+              className={`${
+                isLive ? 'text-aux' : 'text-main'
+              } cursor-pointer  text-lg`}
+              onClick={() => setIsLive(false)}
+            >
+              Upload Record
+            </span>
+          </div>
           <div className='flex  flex-col-reverse md:flex-row gap-10 items-stretch my-3'>
             <Notes disabled={false} setNotes={setNotes} notes={notes} />{' '}
-            <Recording recording={recording} setRecording={setRecording} />
+            {!isLive && (
+              <Recording
+                toast={toast}
+                recording={recording}
+                setRecording={setRecording}
+              />
+            )}
+            {isLive && (
+              <LiveRecording
+                toast={toast}
+                recording={recording}
+                setRecording={setRecording}
+              />
+            )}
           </div>
           <button
             type='submit'
             className=' border border-[white] bg-main text-[white] rounded-md p-1 w-[25%] block ml-auto hover:bg-[white] hover:text-main hover:border-main transition-all'
-            onClick={upload}
+            onClick={(e) => prepareToUpload(e)}
           >
             Upload
           </button>
         </form>
+        <div>
+          <p className='text-md text-main font-semibold'>
+            {pending.length} Recordings are in pending to upload !
+          </p>
+        </div>
       </div>
       {addPatient && (
         <AddPat

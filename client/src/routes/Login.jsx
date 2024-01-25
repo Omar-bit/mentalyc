@@ -62,7 +62,6 @@ function Login({ setUser }) {
     alert(
       'This is a demo version, you can use one of these therapists accounts: \n\n Acc1 \n username: admin \n password: admin \n\n Acc2 \n username: test \n password: psy2 \n\n'
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

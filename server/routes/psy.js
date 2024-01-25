@@ -3,7 +3,6 @@ const router = express.Router();
 const { db } = require('../connectionDB.js');
 const jwt = require('jsonwebtoken');
 
-// Login
 router.post('/login', (req, res) => {
   const { name, pwd } = req.body;
   db.all(

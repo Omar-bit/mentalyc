@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function Recordings() {
-  const TABLE_HEAD = ['Patient Name', 'Phone Number', 'Session Date', ''];
+  const TABLE_HEAD = ['#', 'Patient Name', 'Phone Number', 'Session Date', ''];
 
   const [sessions, setSessions] = React.useState([]);
   const [sessionsFiltered, setSessionsFiltered] = React.useState(sessions);
@@ -155,6 +155,16 @@ function Recordings() {
 
                     return (
                       <tr key={index}>
+                        <td className={classes}>
+                          <Typography
+                            variant='small'
+                            color='blue-gray'
+                            className='font-normal'
+                          >
+                            #Session{index + 1}
+                          </Typography>
+                        </td>
+
                         <td className={classes}>
                           <Typography
                             variant='small'

@@ -68,7 +68,7 @@ function Nav({ nav }) {
             className='md:hidden   cursor-pointer'
             onClick={() => setShowMenu(true)}
           >
-            <CiMenuBurger className='text-[white] text-2xl' />
+            <CiMenuBurger className='text-secondary text-2xl' />
           </div>
         </>
       )}
