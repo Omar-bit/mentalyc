@@ -109,7 +109,7 @@ function Record() {
               className='text-[#222] rounded-md p-1 w-[35%] md:w-[25%] border border-[#D0D4CA]'
               onChange={(e) => setDate(e.target.value)}
             />
-            <div className=' flex items-center gap-3 w-[40%] md:w-[30%]'>
+            <div className=' flex items-center gap-3 w-[50%] md:w-[30%]'>
               <Select
                 defaultValue={patient}
                 onChange={setPatient}

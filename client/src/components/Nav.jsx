@@ -8,10 +8,10 @@ import { TbLogout2 } from 'react-icons/tb';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 
 function Nav({ nav }) {
+  const navigate = useNavigate();
   const user = React.useContext(userContext);
 
-  const [showMenu, setShowMenu] = React.useState(true);
-  const navigate = useNavigate();
+  const [showMenu, setShowMenu] = React.useState(false);
   const current = window.location.pathname.substring(1);
   const routes = [
     { slug: 'Recordings', name: '', path: '/' },
@@ -28,11 +28,13 @@ function Nav({ nav }) {
   return (
     <header className='   border border-[#D0D4CA] w-[95vw] shadow-xl bg-primary md:w-[90vw] mx-auto mt-2 rounded-lg py-5 px-14 flex justify-between items-center'>
       <h2 className='text-main font-bold text-2xl navTitle'>Mentalyc</h2>
-      {showMenu && user && (
+      {user && (
         <nav
-          className='w-[100vw] h-[100vh]  bg-primary z-[50]  fixed -top-0 right-0 
-      flex flex-col justify-center items-center gap-5 
-      md:flex-row md:static md:bg-none md:w-auto md:h-auto '
+          className={`${
+            showMenu ? 'flex' : 'hidden'
+          } md:flex w-[100vw] h-[100vh]  bg-primary z-[50]  fixed -top-0 right-0 
+       flex-col justify-center items-center gap-5 
+      md:flex-row md:static md:bg-none md:w-auto md:h-auto `}
         >
           <div
             className='md:hidden absolute  top-5 right-5  cursor-pointer'
@@ -40,13 +42,19 @@ function Nav({ nav }) {
           >
             <IoCloseSharp className='text-2xl text-secondary' />
           </div>
-
+          <h3 className=' text-aux mb-10 text-4xl  hover:font-semibold underline'>
+            Menu
+          </h3>
           {routes.map((route) => (
             <Link
               key={route.name}
               className={`${
                 current === route.name ? 'font-bold' : ''
               } text-main text-lg  hover:font-semibold`}
+              onClick={() => {
+                setShowMenu(false);
+                //navigate(route.path);
+              }}
               to={route.path}
             >
               {route.slug}

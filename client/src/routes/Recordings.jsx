@@ -124,9 +124,9 @@ function Recordings() {
             Record
           </Link>
         </div>
-        <Card className=' shadow-lg max-h-[70vh] w-full md:w-[90vw]  overflow-auto p-4'>
-          <div className=' border border-[#D0D4CA] rounded-md'>
-            <table className='w-full min-w-max table-auto text-left rounded-md'>
+        <Card className=' shadow-lg max-h-[70vh] w-full  md:w-[90vw]   p-4'>
+          <div className=' border w-full border-[#D0D4CA] rounded-md overflow-auto'>
+            <table className=' w-full table-auto text-left rounded-md  '>
               <thead>
                 <tr>
                   {TABLE_HEAD.map((head, index) => (
@@ -189,7 +189,10 @@ function Recordings() {
                             color='blue-gray'
                             className='font-normal'
                           >
-                            {date} <br />
+                            {date.indexOf(' ') !== -1
+                              ? date.substring(0, date.indexOf(' '))
+                              : date}{' '}
+                            <br />
                           </Typography>
                         </td>
 

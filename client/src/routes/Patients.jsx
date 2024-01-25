@@ -111,9 +111,9 @@ function Patients() {
             Add Patient
           </button>
         </div>
-        <Card className='p-4 shadow-lg max-h-[70vh] w-full md:w-[90vw]  overflow-auto'>
-          <div className=' border border-[#D0D4CA] rounded-md'>
-            <table className='w-full min-w-max table-auto text-left rounded-md '>
+        <Card className='p-4 shadow-lg max-h-[70vh] w-full md:w-[90vw]  '>
+          <div className=' border border-[#D0D4CA] rounded-md overflow-auto'>
+            <table className='w-full  table-auto text-left rounded-md '>
               <thead>
                 <tr>
                   {TABLE_HEAD.map((head) => (

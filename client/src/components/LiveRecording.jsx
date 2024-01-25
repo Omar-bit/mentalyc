@@ -49,7 +49,7 @@ function LiveRecording({ toast, recording, setRecording }) {
     return () => clearInterval(interval);
   }, [isRecording]);
   return (
-    <div className='border-2 border-dashed w-[47%] rounded-md flex items-center gap-3 justify-center'>
+    <div className='border-2 border-dashed w-full p-2 md:p-0 md:w-[47%] rounded-md flex items-center gap-3 justify-center'>
       {!isRecording && (
         <span className=' cursor-pointer'>
           <AiFillAudio
