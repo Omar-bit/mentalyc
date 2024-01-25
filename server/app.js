@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cors = require('cors');
+require('dotenv').config();
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -17,4 +18,5 @@ app.get('/', (req, res) => {
 app.use('/api/psy', psyRouter);
 app.use('/api/patient', patientRouter);
 app.use('/api/session', sessionRouter);
-app.listen(5000, () => console.log('Server started on port 5000'));
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log('Server started on port port'));
