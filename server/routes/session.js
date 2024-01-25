@@ -19,7 +19,7 @@ const upload = multer({ storage: storage });
 
 router.get('/getAll', (req, res) => {
   db.all(
-    `SELECT * FROM session as s , patient as p where p.idPat = s.idPat and s.idPsy =? `,
+    `SELECT * FROM session as s , patient as p where p.idPat = s.idPat and s.idPsy =? order by Date(s.date) desc`,
     [req.idPsy],
     (err, rows) => {
       if (err) {
@@ -96,7 +96,8 @@ router.post('/add', upload.single('records'), (req, res) => {
   const records = req.file.filename;
 
   const newName = generateUniqueName();
-
+  let d = new Date();
+  d = d.getHours() + ':' + d.getMinutes();
   /*fs.writeFile(
     path.join(__dirname, '..', 'uploads', newName + '.mp3'),
     fs.readFileSync(path.join(__dirname, '..', 'uploads', records)),
@@ -111,7 +112,7 @@ router.post('/add', upload.single('records'), (req, res) => {
   );
   db.run(
     `INSERT INTO session (idPat,idPsy,date,notes,records) VALUES (?,?,?,?,?)`,
-    [idPat, req.idPsy, date, notes, newName + '.mp3'],
+    [idPat, req.idPsy, date + ' ' + d, notes, newName + '.mp3'],
     (err) => {
       if (err) {
         res.status(400).json({ error: true, data: err.message });

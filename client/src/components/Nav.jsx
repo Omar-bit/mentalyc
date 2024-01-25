@@ -42,7 +42,7 @@ function Nav({ nav }) {
           >
             <IoCloseSharp className='text-2xl text-secondary' />
           </div>
-          <h3 className=' text-aux mb-10 text-4xl  hover:font-semibold underline'>
+          <h3 className='md:hidden text-aux mb-10 text-4xl  hover:font-semibold underline'>
             Menu
           </h3>
           {routes.map((route) => (
