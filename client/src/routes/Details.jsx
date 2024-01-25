@@ -81,7 +81,12 @@ export default function Details() {
         <div className='flex items-center justify-between w-full  border border-main shadow-lg rounded-lg p-3 '>
           <h3>Patient : {session?.name}</h3>
           <h3>Phone Nbr : {session?.phone}</h3>
-          <h3>Date : {session?.date}</h3>
+          <h3>
+            Date :{' '}
+            {session?.date.indexOf(' ') !== -1
+              ? session?.date.substring(0, session?.date?.indexOf(' '))
+              : session?.date}
+          </h3>
           <FaRegTrashCan
             onClick={() => deleteSess(session.idPat, session.date)}
             className='text-xl  cursor-pointer'

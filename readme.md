@@ -1,3 +1,9 @@
+# About Me
+
+Full Name : Omar Bouassida
+Email : bouassidaomar9@gmail.com
+Github : https://github.com/Omar-bit
+
 # Mentallyc
 
 mentallyc is a platform for therapists to manage their clients and recordings data
