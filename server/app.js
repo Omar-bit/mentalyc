@@ -19,4 +19,4 @@ app.use('/api/psy', psyRouter);
 app.use('/api/patient', patientRouter);
 app.use('/api/session', sessionRouter);
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log('Server started on port port'));
+app.listen(port, () => console.log('Server started on port ' + port));
