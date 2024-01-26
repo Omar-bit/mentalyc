@@ -83,6 +83,7 @@ function Record() {
       console.log(err);
     } finally {
       //setLoading(false);
+      setPending((prev) => prev.slice(1));
     }
   }
   React.useEffect(() => {
@@ -91,7 +92,7 @@ function Record() {
   React.useEffect(() => {
     if (pending.length > 0) {
       upload(pending[0]);
-      setPending((prev) => prev.slice(1));
+
     }
   }, [pending]);
   return (
